@@ -1,0 +1,31 @@
+digraph {
+	compound = "true"
+	newrank = "true"
+	subgraph "root" {
+		"[root] data.google_compute_image.webserver_image (expand)" [label = "data.google_compute_image.webserver_image", shape = "box"]
+		"[root] data.template_file.user_data (expand)" [label = "data.template_file.user_data", shape = "box"]
+		"[root] google_compute_firewall.webserver_firewall (expand)" [label = "google_compute_firewall.webserver_firewall", shape = "box"]
+		"[root] google_compute_instance.webserver_instance (expand)" [label = "google_compute_instance.webserver_instance", shape = "box"]
+		"[root] output.gcp_image" [label = "output.gcp_image", shape = "note"]
+		"[root] output.jenkins-server" [label = "output.jenkins-server", shape = "note"]
+		"[root] provider[\"registry.terraform.io/hashicorp/google\"]" [label = "provider[\"registry.terraform.io/hashicorp/google\"]", shape = "diamond"]
+		"[root] provider[\"registry.terraform.io/hashicorp/template\"]" [label = "provider[\"registry.terraform.io/hashicorp/template\"]", shape = "diamond"]
+		"[root] data.google_compute_image.webserver_image (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/google\"]"
+		"[root] data.template_file.user_data (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/template\"]"
+		"[root] google_compute_firewall.webserver_firewall (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/google\"]"
+		"[root] google_compute_instance.webserver_instance (expand)" -> "[root] data.google_compute_image.webserver_image (expand)"
+		"[root] google_compute_instance.webserver_instance (expand)" -> "[root] data.template_file.user_data (expand)"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] google_compute_firewall.webserver_firewall (expand)"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] output.gcp_image"
+		"[root] meta.count-boundary (EachMode fixup)" -> "[root] output.jenkins-server"
+		"[root] output.gcp_image" -> "[root] data.google_compute_image.webserver_image (expand)"
+		"[root] output.jenkins-server" -> "[root] google_compute_instance.webserver_instance (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/google\"] (close)" -> "[root] google_compute_firewall.webserver_firewall (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/google\"] (close)" -> "[root] google_compute_instance.webserver_instance (expand)"
+		"[root] provider[\"registry.terraform.io/hashicorp/template\"] (close)" -> "[root] data.template_file.user_data (expand)"
+		"[root] root" -> "[root] meta.count-boundary (EachMode fixup)"
+		"[root] root" -> "[root] provider[\"registry.terraform.io/hashicorp/google\"] (close)"
+		"[root] root" -> "[root] provider[\"registry.terraform.io/hashicorp/template\"] (close)"
+	}
+}
+
